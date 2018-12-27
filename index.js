@@ -1,24 +1,25 @@
 const express = require('express');
 const path = require('path');
+const expressEdge = require('express-edge');
 
 const app = express();
 
 app.use(express.static('public'));
+app.use(expressEdge);
+app.set('views', path.join(__dirname, 'views'));
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'pages', 'index.html'));
+  res.render('index');
 })
-app.get('/index.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'pages', './index.html'));
+
+app.get('/about', (req, res) => {
+  res.render('about');
 })
-app.get('/about.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'pages', 'about.html'));
+app.get('/contact', (req, res) => {
+  res.render('contact');
 })
-app.get('/contact.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'pages', 'contact.html'));
-})
-app.get('/post.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'post.html'));
+app.get('/post', (req, res) => {
+  res.render('post');
 })
 
 
