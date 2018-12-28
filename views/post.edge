@@ -3,7 +3,7 @@
 @section('content')
 
   <!-- Page Header -->
-    <header class="masthead" style="background-image: url('/img/post-bg.jpg')">
+    <header class="masthead" style="background-image: url('{{ foundPost.image || '/img/post-bg.jpg' }}')">
       <div class="overlay"></div>
       <div class="container">
         <div class="row">
@@ -12,8 +12,8 @@
               <h1>{{foundPost.title}}</h1>
               <h2 class="subheading">{{foundPost.description}}</h2>
               <span class="meta">Posted by
-                <a href="#">Start Bootstrap</a>
-                on August 24, 2018</span>
+                <a href="#">{{foundPost.username}}</a>
+                on {{foundPost.createdAt.toDateString()}}</span>
             </div>
           </div>
         </div>

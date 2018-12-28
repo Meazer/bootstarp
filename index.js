@@ -4,6 +4,7 @@ const expressEdge = require('express-edge');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const post = require(path.join(__dirname, '.', 'database', 'models', 'Post'));
+const fileUpload = require('express-fileupload');
 
 mongoose.connect('mongodb://localhost/node-js-blog');
 const app = express();
@@ -14,6 +15,7 @@ app.use(expressEdge);
 app.set('views', path.join(__dirname, 'views'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(fileUpload());
 
 app.get('/', async (req, res) => {
   const posts = await post.find({});
@@ -25,9 +27,15 @@ app.get('/posts/new', (req, res) => {
 })
 
 app.post('/posts/store', (req, res) => {
-  post.create(req.body, (error, response) => {
-    console.log(error, response);
-    res.redirect('/');
+
+  const image = req.files.image;
+  image.mv(path.join(__dirname, 'public', 'postsImg', image.name), (err) => {
+    post.create({
+      ...req.body,
+      image: `/postsImg/${image.name}`
+    }, (error, response) => {
+      res.redirect('/');
+    })
   })
 })
 
