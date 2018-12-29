@@ -6,9 +6,15 @@ const bodyParser = require('body-parser');
 const post = require(path.join(__dirname, '.', 'database', 'models', 'Post'));
 const fileUpload = require('express-fileupload');
 
+const homePageController = require(path.join(__dirname, 'controllers', 'homePageController.js'));
+const createPostController = require(path.join(__dirname, 'controllers', 'createPostController.js'));
+const storePostController = require(path.join(__dirname, 'controllers', 'storePostController.js'));
+const aboutPageController = require(path.join(__dirname, 'controllers', 'aboutPageController.js'));
+const contactPageController = require(path.join(__dirname, 'controllers', 'contactPageController.js'));
+const getPostController = require(path.join(__dirname, 'controllers', 'getPostController.js'));
+
 mongoose.connect('mongodb://localhost/node-js-blog');
 const app = express();
-
 
 app.use(express.static('public'));
 app.use(expressEdge);
@@ -17,41 +23,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(fileUpload());
 
-app.get('/', async (req, res) => {
-  const posts = await post.find({});
-  res.render('index', { posts });
-})
-
-app.get('/posts/new', (req, res) => {
-  res.render('create');
-})
-
-app.post('/posts/store', async (req, res) => {
-
-  const image = req.files.image;
-  let imgPath = '';
-  if (image) {
-    await image.mv(path.join(__dirname, 'public', 'postsImg', image.name));
-    imgPath = `/postsImg/${image.name}`
-  }
-  post.create({
-    ...req.body,
-    image: imgPath
-  }, (error, response) => {
-    res.redirect('/');
-  })
-})
-
-app.get('/about', (req, res) => {
-  res.render('about');
-})
-app.get('/contact', (req, res) => {
-  res.render('contact');
-})
-app.get('/post/:id', async (req, res) => {
-  const foundPost = await post.findById(req.params.id)
-  res.render('post', { foundPost });
-})
-
+app.get('/', homePageController)
+app.get('/posts/new', createPostController)
+app.post('/posts/store', storePostController)
+app.get('/about', aboutPageController)
+app.get('/contact', contactPageController)
+app.get('/post/:id', getPostController)
 
 app.listen(4000, () => console.log('Server listen on port 4000'));
