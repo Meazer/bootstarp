@@ -26,16 +26,19 @@ app.get('/posts/new', (req, res) => {
   res.render('create');
 })
 
-app.post('/posts/store', (req, res) => {
+app.post('/posts/store', async (req, res) => {
 
   const image = req.files.image;
-  image.mv(path.join(__dirname, 'public', 'postsImg', image.name), (err) => {
-    post.create({
-      ...req.body,
-      image: `/postsImg/${image.name}`
-    }, (error, response) => {
-      res.redirect('/');
-    })
+  let imgPath = '';
+  if (image) {
+    await image.mv(path.join(__dirname, 'public', 'postsImg', image.name));
+    imgPath = `/postsImg/${image.name}`
+  }
+  post.create({
+    ...req.body,
+    image: imgPath
+  }, (error, response) => {
+    res.redirect('/');
   })
 })
 
