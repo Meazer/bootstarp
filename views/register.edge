@@ -1,0 +1,58 @@
+@layout('layouts.app')
+
+@section('content')
+  
+
+  <!-- Page Header -->
+    <header class="masthead" style="background-image: url('/img/home-bg.jpg')">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="page-heading">
+              <h1>Create New Account</h1>    
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- Main Content -->
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+         <form action="/users/register" method="POST" enctype="multipart/form-data">
+          <div class="control-group">
+              <div class="form-group floating-label-form-group controls">
+                <label>UserName</label>
+                <input type="text" class="form-control" placeholder="Username" name="username" required data-validation-required-message="Please enter your username.">
+                <p class="help-block text-danger"></p>
+              </div>
+            </div>
+            <div class="control-group">
+              <div class="form-group floating-label-form-group controls">
+                <label>Email</label>
+                <input type="email" class="form-control" placeholder="Email" name="email" required data-validation-required-message="Please enter the title.">
+                <p class="help-block text-danger"></p>
+              </div>
+            </div>
+            <div class="control-group">
+              <div class="form-group floating-label-form-group controls">
+                <label>Password</label>
+                <input type="Password" class="form-control" placeholder="Password" name="password" required data-validation-required-message="Please enter the Description.">
+                <p class="help-block text-danger"></p>
+              </div>
+            </div>
+        
+            <br>
+            
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary" >Register Now</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+@endsection

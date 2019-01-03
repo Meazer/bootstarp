@@ -6,12 +6,14 @@ const bodyParser = require('body-parser');
 const post = require(path.join(__dirname, '.', 'database', 'models', 'Post'));
 const fileUpload = require('express-fileupload');
 
-const homePageController = require(path.join(__dirname, 'controllers', 'homePageController.js'));
-const createPostController = require(path.join(__dirname, 'controllers', 'createPostController.js'));
-const storePostController = require(path.join(__dirname, 'controllers', 'storePostController.js'));
-const aboutPageController = require(path.join(__dirname, 'controllers', 'aboutPageController.js'));
-const contactPageController = require(path.join(__dirname, 'controllers', 'contactPageController.js'));
-const getPostController = require(path.join(__dirname, 'controllers', 'getPostController.js'));
+const homePageController = require(path.join(__dirname, 'controllers', 'homePage.js'));
+const createPostController = require(path.join(__dirname, 'controllers', 'createPost.js'));
+const storePostController = require(path.join(__dirname, 'controllers', 'storePost.js'));
+const aboutPageController = require(path.join(__dirname, 'controllers', 'aboutPage.js'));
+const contactPageController = require(path.join(__dirname, 'controllers', 'contactPage.js'));
+const getPostController = require(path.join(__dirname, 'controllers', 'getPost.js'));
+const userRegisterController = require(path.join(__dirname, 'controllers', 'userRegister.js'));
+const userStoreController = require(path.join(__dirname, 'controllers', 'userStore.js'));
 
 mongoose.connect('mongodb://localhost/node-js-blog');
 const app = express();
@@ -29,5 +31,7 @@ app.post('/posts/store', storePostController)
 app.get('/about', aboutPageController)
 app.get('/contact', contactPageController)
 app.get('/post/:id', getPostController)
+app.get('/auth/register', userRegisterController);
+app.post('/users/register', userStoreController);
 
 app.listen(4000, () => console.log('Server listen on port 4000'));
