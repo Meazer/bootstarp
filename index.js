@@ -15,7 +15,8 @@ const getPostController = require(path.join(__dirname, 'controllers', 'getPost.j
 const userRegisterController = require(path.join(__dirname, 'controllers', 'userRegister.js'));
 const userStoreController = require(path.join(__dirname, 'controllers', 'userStore.js'));
 
-mongoose.connect('mongodb://localhost/node-js-blog');
+mongoose.connect('mongodb://localhost/node-js-blog',{ useNewUrlParser: true });
+mongoose.set('useCreateIndex', true)
 const app = express();
 
 app.use(express.static('public'));
