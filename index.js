@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
 const session = require('express-session');
+const mongoStore = require('connect-mongo')(session);
 
 const homePageController = require(path.join(__dirname, 'controllers', 'homePage.js'));
 const createPostController = require(path.join(__dirname, 'controllers', 'createPost.js'));
@@ -22,7 +23,8 @@ mongoose.set('useCreateIndex', true)
 const app = express();
 
 app.use(session({
-  secret: 'secret'
+  secret: 'secret',
+  store: new mongoStore({ mongooseConnection: mongoose.connection })
 }))
 app.use(express.static('public'));
 app.use(expressEdge);
