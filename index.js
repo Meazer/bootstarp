@@ -17,6 +17,7 @@ const userRegisterController = require(path.join(__dirname, 'controllers', 'user
 const userStoreController = require(path.join(__dirname, 'controllers', 'userStore.js'));
 const loginController = require(path.join(__dirname, 'controllers', 'login.js'));
 const userLoginController = require(path.join(__dirname, 'controllers', 'userLogin.js'));
+const auth = require(path.join(__dirname, 'middleware', 'auth.js'));
 
 mongoose.connect('mongodb://localhost/node-js-blog', { useNewUrlParser: true });
 mongoose.set('useCreateIndex', true)
@@ -34,8 +35,8 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(fileUpload());
 
 app.get('/', homePageController)
-app.get('/posts/new', createPostController)
-app.post('/posts/store', storePostController)
+app.get('/posts/new', auth, createPostController)
+app.post('/posts/store', auth, storePostController)
 app.get('/about', aboutPageController)
 app.get('/contact', contactPageController)
 app.get('/post/:id', getPostController)
