@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
 const session = require('express-session');
 const mongoStore = require('connect-mongo')(session);
+const flash = require('connect-flash');
 
 const homePageController = require(path.join(__dirname, 'controllers', 'homePage.js'));
 const createPostController = require(path.join(__dirname, 'controllers', 'createPost.js'));
@@ -25,7 +26,9 @@ const app = express();
 
 app.use(session({
   secret: 'secret',
-  store: new mongoStore({ mongooseConnection: mongoose.connection })
+  store: new mongoStore({ mongooseConnection: mongoose.connection }),
+  resave: true,
+  saveUninitialized: true
 }))
 app.use(express.static('public'));
 app.use(expressEdge);
@@ -33,6 +36,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(fileUpload());
+app.use(flash())
 
 app.get('/', homePageController)
 app.get('/posts/new', auth, createPostController)
