@@ -20,6 +20,8 @@ const userStoreController = require(path.join(__dirname, 'controllers', 'userSto
 const loginController = require(path.join(__dirname, 'controllers', 'login.js'));
 const userLoginController = require(path.join(__dirname, 'controllers', 'userLogin.js'));
 const auth = require(path.join(__dirname, 'middleware', 'auth.js'));
+const redirectIfAuth = require(path.join(__dirname, 'middleware', 'redirectIfAuth.js'));
+const logoutController = require(path.join(__dirname, 'controllers', 'userLogout.js'));
 
 mongoose.connect('mongodb://localhost/node-js-blog', { useNewUrlParser: true });
 mongoose.set('useCreateIndex', true)
@@ -49,10 +51,10 @@ app.post('/posts/store', auth, storePostController)
 app.get('/about', aboutPageController)
 app.get('/contact', contactPageController)
 app.get('/post/:id', getPostController)
-app.get('/auth/register', userRegisterController);
-app.post('/users/register', userStoreController);
-app.get('/auth/login', loginController);
-app.post('/users/login', userLoginController);
-
+app.get('/auth/register', redirectIfAuth, userRegisterController);
+app.post('/users/register', redirectIfAuth, userStoreController);
+app.get('/auth/login', redirectIfAuth, loginController);
+app.post('/users/login', redirectIfAuth, userLoginController);
+app.get('/auth/logout', logoutController);
 
 app.listen(4000, () => console.log('Server listen on port 4000'));
