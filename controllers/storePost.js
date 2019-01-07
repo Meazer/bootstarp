@@ -11,6 +11,7 @@ module.exports = async (req, res) => {
   }
   post.create({
     ...req.body,
+    user_id: req.session.userId,
     image: imgPath
   }, (error, response) => {
     res.redirect('/');
