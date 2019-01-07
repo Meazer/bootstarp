@@ -31,14 +31,14 @@
           <div class="control-group">
               <div class="form-group floating-label-form-group controls">
                 <label>UserName</label>
-                <input type="text" class="form-control" placeholder="Username" name="username">
+              <input type="text" class="form-control" value="{{ data.username || '' }}" placeholder="Username" name="username">
                 <p class="help-block text-danger"></p>
               </div>
             </div>
             <div class="control-group">
               <div class="form-group floating-label-form-group controls">
                 <label>Email</label>
-                <input type="email" class="form-control" placeholder="Email" name="email" >
+                <input type="email" class="form-control" value="{{ data.email || '' }}" placeholder="Email" name="email" >
                 <p class="help-block text-danger"></p>
               </div>
             </div>
